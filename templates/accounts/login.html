@@ -1,5 +1,5 @@
 {% extends "base/base.html" %} {% load static %} {% load socialaccount %} 
-{% block title %}Login{% endblock %}
+{% block title %}เข้าสู่ระบบ{% endblock %}
 {% block start %}
 
 <!-- ============================ COMPONENT LOGIN   ================================= -->
@@ -9,7 +9,7 @@
       <div class="col-xl-4">
         <div class="card mb-4">
           <div class="card-header" style="text-align: center; font-size: 25px">
-            Sign In
+            เข้าสู่ระบบ
           </div>
           <div class="card-body">
             <form method="POST" action="{% url 'login' %}?next={{ request.GET.next }}">
@@ -19,7 +19,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Username"
+                  placeholder="ชื่อผู้ใช้"
                   name="username"
                   type="text"
                   autocomplete="username"
@@ -30,7 +30,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Password"
+                  placeholder="รหัสผ่าน"
                   name="password"
                   type="password"
                 />
@@ -39,23 +39,23 @@
 
               <div class="form-group">
                 <a href="{% url 'password_reset' %}" class="float-right">
-                  Forgot password?
+                  ลืมรหัสผ่าน?
                 </a>
                 <label class="float-left custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" checked/>
-                  <div class="custom-control-label">Remember</div>
+                  <div class="custom-control-label">จดจำฉัน</div>
                 </label>
               </div>
 
               <!-- form-group// -->
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">
-                  Login
+                  เข้าสู่ระบบ
                 </button>
               </div>
 
               <p class="text-center mt-4">
-                Don't have account? <a href="{% url 'register' %}">Sign up</a>
+                ยังไม่มีบัญชี? <a href="{% url 'register' %}">สมัครสมาชิก</a>
               </p>
 
               <div class="line"></div>
@@ -63,14 +63,14 @@
               <div class="media-options">
                 <a href="{% provider_login_url 'facebook' %}" class="field facebook">
                   <i class="bx bxl-facebook facebook-icon"></i>
-                  <span>Login with Facebook</span>
+                  <span>เข้าสู่ระบบด้วย Facebook</span>
                 </a>
               </div>
 
               <div class="media-options">
                 <a href="{% provider_login_url 'google' %}?next=/" class="field google">
                   <img src="{% static 'images/google.png' %}" alt="" class="google-img"/>
-                  <span>Login with Google</span>
+                  <span>เข้าสู่ระบบด้วย Google</span>
                 </a>
               </div>
             </form>

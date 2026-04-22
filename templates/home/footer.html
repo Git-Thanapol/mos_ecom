@@ -7,9 +7,8 @@
       <!-- Brand Section -->
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="footer-brand">
-          <h3 class="brand-title fw-bold mb-3">FootFusion</h3>
-          <p class="text-light opacity-75 mb-4">Your one-stop shop for the latest trends in fashion, electronics, and
-            more. We are committed to providing you with the best products and a seamless shopping experience.</p>
+          <h3 class="brand-title fw-bold mb-3">SP Market</h3>
+          <p class="text-light opacity-75 mb-4">สินค้าในครัวเรือนครบวงจรสำหรับทุกสไตล์ เรามุ่งมั่นนำเสนอสินค้าคุณภาพดีที่สุดพร้อมประสบการณ์ช้อปปิ้งที่ราบรื่น</p>
 
           <!-- Social Media Icons -->
           <div class="social-links">
@@ -31,59 +30,72 @@
 
       <!-- Quick Links -->
       <div class="col-lg-2 col-md-6 col-6 mb-4">
-        <h5 class="section-heading fw-semibold mb-3">Quick Links</h5>
+        <h5 class="section-heading fw-semibold mb-3">ลิงก์ด่วน</h5>
         <ul class="list-unstyled footer-links">
-          <li class="mb-2"><a href="{% url 'index' %}" class="footer-link">Home</a></li>
-          <li class="mb-2"><a href="{% url 'order_history' %}" class="footer-link">Your Orders</a></li>
-          <li class="mb-2"><a href="{% url 'wishlist' %}" class="footer-link">Wishlist</a></li>
-          <li class="mb-2"><a href="{% url 'contact' %}" class="footer-link">Contact Us</a></li>
-          <li class="mb-2"><a href="{% url 'about' %}" class="footer-link">About Us</a></li>
+          <li class="mb-2"><a href="{% url 'index' %}" class="footer-link">หน้าแรก</a></li>
+          <li class="mb-2"><a href="{% url 'order_history' %}" class="footer-link">คำสั่งซื้อของคุณ</a></li>
+          <li class="mb-2"><a href="{% url 'wishlist' %}" class="footer-link">รายการโปรด</a></li>
+          <li class="mb-2"><a href="{% url 'contact' %}" class="footer-link">ติดต่อเรา</a></li>
+          <li class="mb-2"><a href="{% url 'about' %}" class="footer-link">เกี่ยวกับเรา</a></li>
         </ul>
       </div>
 
       <!-- Categories -->
       <div class="col-lg-2 col-md-6 col-6 mb-4">
-        <h5 class="section-heading fw-semibold mb-3">Categories</h5>
+        <h5 class="section-heading fw-semibold mb-3">หมวดหมู่</h5>
         <ul class="list-unstyled footer-links">
-          <li class="mb-2"><a href="#" class="footer-link">Men's Fashion</a></li>
-          <li class="mb-2"><a href="#" class="footer-link">Women's Fashion</a></li>
-          <li class="mb-2"><a href="#" class="footer-link">Electronics</a></li>
-          <li class="mb-2"><a href="#" class="footer-link">Home & Kitchen</a></li>
-          <li class="mb-2"><a href="#" class="footer-link">Sports & Outdoors</a></li>
+          <li class="mb-2"><a href="#" class="footer-link">แฟชั่นผู้ชาย</a></li>
+          <li class="mb-2"><a href="#" class="footer-link">แฟชั่นผู้หญิง</a></li>
+          <li class="mb-2"><a href="#" class="footer-link">อิเล็กทรอนิกส์</a></li>
+          <li class="mb-2"><a href="#" class="footer-link">บ้านและครัว</a></li>
+          <li class="mb-2"><a href="#" class="footer-link">กีฬาและกลางแจ้ง</a></li>
         </ul>
       </div>
 
       <!-- Account & Support -->
       <div class="col-lg-2 col-md-6 col-6 mb-4">
-        <h5 class="section-heading fw-semibold mb-3">Account</h5>
+        <h5 class="section-heading fw-semibold mb-3">บัญชี</h5>
         <ul class="list-unstyled footer-links">
           {% if user.is_authenticated %}
-          <li class="mb-2"><a href="{% url 'profile' username=user.username %}" class="footer-link">My Profile</a></li>
+          <li class="mb-2"><a href="{% url 'profile' username=user.username %}" class="footer-link">โปรไฟล์ของฉัน</a></li>
           {% else %}
-          <li class="mb-2"><a href="{% url 'login' %}" class="footer-link">Sign In</a></li>
-          <li class="mb-2"><a href="{% url 'register' %}" class="footer-link">Register</a></li>
+          <li class="mb-2"><a href="{% url 'login' %}" class="footer-link">เข้าสู่ระบบ</a></li>
+          <li class="mb-2"><a href="{% url 'register' %}" class="footer-link">สมัครสมาชิก</a></li>
           {% endif %}
-          <li class="mb-2"><a href="{% url 'shipping-address' %}" class="footer-link">Shipping Info</a></li>
-          <li class="mb-2"><a href="{% url 'product_reviews' %}" class="footer-link">My Reviews</a></li>
+          <li class="mb-2"><a href="{% url 'shipping-address' %}" class="footer-link">ข้อมูลการจัดส่ง</a></li>
+          <li class="mb-2"><a href="{% url 'product_reviews' %}" class="footer-link">รีวิวของฉัน</a></li>
         </ul>
       </div>
 
       <!-- Contact Info -->
       <div class="col-lg-2 col-md-6 col-6 mb-4">
-        <h5 class="section-heading fw-semibold mb-3">Contact</h5>
+        <h5 class="section-heading fw-semibold mb-3">ติดต่อ</h5>
         <div class="contact-info">
           <div class="contact-item mb-2">
-            <i class="fas fa-map-marker-alt contact-icon me-2"></i>
-            <small class="text-light opacity-75">Bhopal, Madhya Pradesh, India</small>
+            <i class="fas fa-regular fa-building contact-icon me-2"></i>
+            <small class="text-light opacity-75">SWIFT PASSION CO., LTD.</small>
           </div>
           <div class="contact-item mb-2">
-            <i class="fas fa-envelope contact-icon me-2"></i>
-            <small><a href="mailto:atulguptag111@gmail.com" class="footer-link">atulguptag111@gmail.com</a></small>
+            <i class="fas fa-map-marker-alt contact-icon me-2"></i>
+            <small class="text-light opacity-75">84, Soi Phetkasem 63/4, Laksong, Bang Khae, Bangkok 10160</small>
           </div>
           <div class="contact-item mb-2">
             <i class="fas fa-phone contact-icon me-2"></i>
-            <small><a href="#" class="footer-link">+91 7000XXXXXX</a></small>
+            <small><a href="#" class="footer-link">+66 812394553</a></small>
           </div>
+          <div class="contact-item mb-2">
+            <i class="fas fa-envelope contact-icon me-2"></i>
+            <small><a href="mailto:atulguptag111@gmail.com" class="footer-link">spmarket@swiftpassion.net</a></small>
+          </div>
+          <div class="contact-item mb-2">
+            <i class="fas fa-solid fa-registered contact-icon me-2"></i>
+            <small class="text-light opacity-75">Business Registration Number: 0105562172037</small>
+          </div>
+          <div class="contact-item mb-2">
+            <i class="fa-brands fa-line contact-icon me-2"></i>
+            <small><a href="#" class="footer-link">LINE: @swiftmarket</a></small>
+          </div>
+
         </div>
       </div>
     </div>
@@ -93,14 +105,14 @@
     <div class="row align-items-center">
       <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
         <p class="mb-0 text-light opacity-75">
-          © 2025 <span class="brand-highlight fw-semibold">FootFusion</span>. All rights reserved.
+          © 2026 <span class="brand-highlight fw-semibold">SP Market</span>. สงวนลิขสิทธิ์
         </p>
       </div>
       <div class="col-md-6 text-center text-md-end">
         <div class="footer-links d-inline-flex gap-3">
-          <a href="{% url 'privacy-policy' %}" class="footer-link small">Privacy Policy</a>
-          <a href="{% url 'terms-and-conditions' %}" class="footer-link small">Terms of Service</a>
-          <a href="{% url 'contact' %}" class="footer-link small">Support</a>
+          <a href="{% url 'privacy-policy' %}" class="footer-link small">นโยบายความเป็นส่วนตัว</a>
+          <a href="{% url 'terms-and-conditions' %}" class="footer-link small">เงื่อนไขการใช้บริการ</a>
+          <a href="{% url 'contact' %}" class="footer-link small">การสนับสนุน</a>
         </div>
       </div>
     </div>

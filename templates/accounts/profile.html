@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% block title %}Profile{% endblock title %}
+{% block title %}โปรไฟล์{% endblock title %}
 {% load crispy_forms_tags %} {% load static %} {% block start %}
 
 <style>
@@ -67,9 +67,9 @@
   <div class="container-xl px-4 mt-4">
     {% include "base/alert.html" %}
     <nav class="nav nav-borders">
-      <a class="nav-link active ms-0" href="{% url 'profile' username=user.username %}">Profile</a>
-      <a class="nav-link ms-0" href="{% url 'shipping-address' %}">Address</a>
-      <a class="nav-link ms-0" href="{% url 'change_password' %}">Security</a>
+      <a class="nav-link active ms-0" href="{% url 'profile' username=user.username %}">โปรไฟล์</a>
+      <a class="nav-link ms-0" href="{% url 'shipping-address' %}">ที่อยู่</a>
+      <a class="nav-link ms-0" href="{% url 'change_password' %}">ความปลอดภัย</a>
     </nav>
 
     <hr class="mt-0 mb-4" />
@@ -78,7 +78,7 @@
     <div class="row">
       <div class="col-xl-4">
         <div class="card mb-4 mb-xl-0">
-          <div class="card-header">Profile Picture</div>
+          <div class="card-header">รูปโปรไฟล์</div>
           <div class="card-body text-center">
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
@@ -93,7 +93,7 @@
               {% endif %}
 
               <div class="small font-italic text-muted mb-4">
-                JPG or PNG no larger than 5 MB
+                JPG หรือ PNG ขนาดไม่เกิน 5 MB
               </div>
             </form>
           </div>
@@ -103,14 +103,14 @@
       <!-- Account Details Section -->
       <div class="col-xl-8">
         <div class="card mb-4">
-          <div class="card-header">Account Details</div>
+          <div class="card-header">ข้อมูลบัญชี</div>
           <div class="card-body">
             <form method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               {{ user_form|crispy }}
               {{ profile_form|crispy }}
               <button class="btn btn-primary" type="submit">
-                Update Profile
+                อัปเดตโปรไฟล์
               </button>
             </form>
           </div>

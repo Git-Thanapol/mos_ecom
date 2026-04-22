@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% block title %}Shipping Address{% endblock title %}
+{% block title %}ที่อยู่จัดส่ง{% endblock title %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block start %}
@@ -56,9 +56,9 @@
 
     {% include "base/alert.html" %}
     <nav class="nav nav-borders">
-      <a class="nav-link ms-0" href="{% url 'profile' username=user.username %}">Profile</a>
-      <a class="nav-link active ms-0" href="{% url 'shipping-address' %}">Address</a>
-      <a class="nav-link ms-0" href="{% url 'change_password' %}">Security</a>
+      <a class="nav-link ms-0" href="{% url 'profile' username=user.username %}">โปรไฟล์</a>
+      <a class="nav-link active ms-0" href="{% url 'shipping-address' %}">ที่อยู่</a>
+      <a class="nav-link ms-0" href="{% url 'change_password' %}">ความปลอดภัย</a>
     </nav>
 
     <hr class="mt-0 mb-4" />
@@ -66,7 +66,7 @@
     <div class="row">
       <div class="col-xl-20">
         <div class="card mb-4">
-          <div class="card-header">Shipping Address</div>
+          <div class="card-header">ที่อยู่จัดส่ง</div>
           <div class="card-body">
 
             <form method="POST">
@@ -92,9 +92,8 @@
 
               <div class="form-group d-flex justify-content-end">
                 <div class="d-sm-flex">
-                  <a class="mb-2 mb-sm-0 mr-0 mr-sm-3 btn btn-outline-primary back-btn" href="{% url 'index' %}">Back to
-                    Home Page</a>
-                  <button class="btn btn-primary" type="submit">Update Shipping Address</button>
+                  <a class="mb-2 mb-sm-0 mr-0 mr-sm-3 btn btn-outline-primary back-btn" href="{% url 'index' %}">กลับหน้าแรก</a>
+                  <button class="btn btn-primary" type="submit">อัปเดตที่อยู่จัดส่ง</button>
                 </div>
               </div>
 

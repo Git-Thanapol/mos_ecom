@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% block title %}Payment Successful!{% endblock %}
+{% block title %}ชำระเงินสำเร็จ!{% endblock %}
 {% block start %}
 
 <!-- ============================ COMPONENT Payment Success ================================= -->
@@ -9,19 +9,18 @@
       <div class="col-xl-5">
         <div class="card mb-4">
           <div class="card-header" style="text-align: center; font-size: 25px">
-            Payment Successful!
+            ชำระเงินสำเร็จ!
           </div>
           <div class="card-body text-center">
             <p>
-              Your order with Order ID: <strong>{{ order_id }} </strong> has
-              been successfully processed.
+              คำสั่งซื้อของคุณหมายเลข: <strong>{{ order_id }} </strong> ได้รับการดำเนินการเรียบร้อยแล้ว
             </p>
-            <p>Thank you for shopping with us!</p>
+            <p>ขอบคุณที่ช้อปปิ้งกับเรา!</p>
             <a href="{% url 'index' %}" class="btn btn-primary mt-3 mb-3 mr-3">
-              Continue Shopping
+              ช้อปปิ้งต่อ
             </a>
             <a href="{% url 'order_details' order_id=order_id %}" class="btn btn-outline-primary view-order-btn">
-              View Order Details
+              ดูรายละเอียดคำสั่งซื้อ
             </a>
           </div>
         </div>

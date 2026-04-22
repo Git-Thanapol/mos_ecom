@@ -35,17 +35,17 @@ def login_page(request):
         user_obj = User.objects.filter(username=username)
 
         if not user_obj.exists():
-            messages.warning(request, 'Account not found!')
+            messages.warning(request, 'ไม่พบบัญชีผู้ใช้!')
             return HttpResponseRedirect(request.path_info)
 
         if not user_obj[0].profile.is_email_verified:
-            messages.error(request, 'Account not verified!')
+            messages.error(request, 'บัญชียังไม่ได้รับการยืนยัน!')
             return HttpResponseRedirect(request.path_info)
 
         user_obj = authenticate(username=username, password=password)
         if user_obj:
             login(request, user_obj)
-            messages.success(request, 'Login Successfull.')
+            messages.success(request, 'เข้าสู่ระบบสำเร็จ')
 
             # Check if the next URL is safe
             if url_has_allowed_host_and_scheme(url=next_url, allowed_hosts=request.get_host()):
@@ -53,7 +53,7 @@ def login_page(request):
             else:
                 return redirect('index')
 
-        messages.warning(request, 'Invalid credentials.')
+        messages.warning(request, 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง')
         return HttpResponseRedirect(request.path_info)
 
     return render(request, 'accounts/login.html')
@@ -70,7 +70,7 @@ def register_page(request):
         user_obj = User.objects.filter(username=username, email=email)
 
         if user_obj.exists():
-            messages.info(request, 'Username or email already exists!')
+            messages.info(request, 'ชื่อผู้ใช้หรืออีเมลนี้มีอยู่แล้ว!')
             return HttpResponseRedirect(request.path_info)
 
         user_obj = User.objects.create(
@@ -83,7 +83,7 @@ def register_page(request):
         profile.save()
 
         send_account_activation_email(email, profile.email_token)
-        messages.success(request, "An email has been sent to your mail.")
+        messages.success(request, "ส่งอีเมลยืนยันไปยังกล่องจดหมายของคุณแล้ว")
         return HttpResponseRedirect(request.path_info)
 
     return render(request, 'accounts/register.html')
@@ -92,7 +92,7 @@ def register_page(request):
 @login_required
 def user_logout(request):
     logout(request)
-    messages.warning(request, "Logged Out Successfully!")
+    messages.warning(request, "ออกจากระบบสำเร็จ!")
     return redirect('index')
 
 
@@ -101,7 +101,7 @@ def activate_email_account(request, email_token):
         user = Profile.objects.get(email_token=email_token)
         user.is_email_verified = True
         user.save()
-        messages.success(request, 'Account verification successful.')
+        messages.success(request, 'ยืนยันบัญชีสำเร็จแล้ว')
         return redirect('login')
     except Exception as e:
         return HttpResponse('Invalid email token.')
@@ -112,7 +112,7 @@ def add_to_cart(request, uid):
     try:
         variant = request.GET.get('size')
         if not variant:
-            messages.warning(request, 'Please select a size variant!')
+            messages.warning(request, 'กรุณาเลือกขนาดก่อน!')
             return redirect(request.META.get('HTTP_REFERER'))
 
         product = get_object_or_404(Product, uid=uid)
@@ -125,10 +125,10 @@ def add_to_cart(request, uid):
             cart_item.quantity += 1
             cart_item.save()
 
-        messages.success(request, 'Item added to cart successfully.')
+        messages.success(request, 'เพิ่มสินค้าในตะกร้าสำเร็จ')
 
     except Exception as e:
-        messages.error(request, 'Error adding item to cart.', str(e))
+        messages.error(request, 'เกิดข้อผิดพลาดในการเพิ่มสินค้า', str(e))
 
     return redirect(reverse('cart'))
 
@@ -144,7 +144,7 @@ def cart(request):
 
     except Exception as e:
         messages.warning(
-            request, "Your cart is empty. Please add a product to cart.", str(e))
+            request, "ตะกร้าของคุณว่างเปล่า กรุณาเพิ่มสินค้าก่อน", str(e))
         return redirect(reverse('index'))
 
     if request.method == 'POST':
@@ -152,26 +152,26 @@ def cart(request):
         coupon_obj = Coupon.objects.filter(coupon_code__exact=coupon).first()
 
         if not coupon_obj:
-            messages.warning(request, 'Invalid coupon code.')
+            messages.warning(request, 'รหัสคูปองไม่ถูกต้อง')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         if cart_obj and cart_obj.coupon:
-            messages.warning(request, 'Coupon already exists.')
+            messages.warning(request, 'มีคูปองในตะกร้าแล้ว')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         if coupon_obj and coupon_obj.is_expired:
-            messages.warning(request, 'Coupon code expired.')
+            messages.warning(request, 'คูปองหมดอายุแล้ว')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         if cart_obj and coupon_obj and cart_obj.get_cart_total() < coupon_obj.minimum_amount:
             messages.warning(
-                request, f'Amount should be greater than {coupon_obj.minimum_amount}')
+                request, f'ยอดสั่งซื้อต้องมากกว่า ฿{coupon_obj.minimum_amount}')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         if cart_obj and coupon_obj:
             cart_obj.coupon = coupon_obj
             cart_obj.save()
-            messages.success(request, 'Coupon applied successfully.')
+            messages.success(request, 'ใช้คูปองสำเร็จ')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     if cart_obj:
@@ -180,7 +180,7 @@ def cart(request):
 
         if cart_total_in_paise < 100:
             messages.warning(
-                request, 'Total amount in cart is less than the minimum required amount (1.00 INR). Please add a product to the cart.')
+                request, 'ยอดรวมในตะกร้าต่ำกว่ายอดขั้นต่ำที่กำหนด (฿1.00) กรุณาเพิ่มสินค้าก่อนชำระเงิน')
             return redirect('index')
 
         client = razorpay.Client(
@@ -220,11 +220,11 @@ def remove_cart(request, uid):
     try:
         cart_item = get_object_or_404(CartItem, uid=uid)
         cart_item.delete()
-        messages.success(request, 'Item removed from cart.')
+        messages.success(request, 'ลบสินค้าออกจากตะกร้าแล้ว')
 
     except Exception as e:
         print(e)
-        messages.warning(request, 'Error removing item from cart.')
+        messages.warning(request, 'เกิดข้อผิดพลาดในการลบสินค้า')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -234,7 +234,7 @@ def remove_coupon(request, cart_id):
     cart.coupon = None
     cart.save()
 
-    messages.success(request, 'Coupon Removed.')
+    messages.success(request, 'ลบคูปองแล้ว')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -305,7 +305,7 @@ def profile_view(request, username):
             user_form.save()
             profile_form.save()
             messages.success(
-                request, 'Your profile has been updated successfully!')
+                request, 'อัปเดตโปรไฟล์สำเร็จ!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     context = {
@@ -325,10 +325,10 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(
-                request, 'Your password was successfully updated!')
+                request, 'เปลี่ยนรหัสผ่านสำเร็จ!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            messages.warning(request, 'Please correct the error below.')
+            messages.warning(request, 'กรุณาแก้ไขข้อผิดพลาดด้านล่าง')
     else:
         form = CustomPasswordChangeForm(request.user)
     return render(request, 'accounts/change_password.html', {'form': form})
@@ -348,7 +348,7 @@ def update_shipping_address(request):
             shipping_address.save()
 
             messages.success(
-                request, "The Address Has Been Successfully Saved/Updated!")
+                request, "บันทึก/อัปเดตที่อยู่จัดส่งสำเร็จแล้ว!")
 
             form = ShippingAddressForm()
         else:
@@ -417,5 +417,5 @@ def delete_account(request):
         logout(request)
         user.delete()
         messages.success(
-            request, "Your account has been deleted successfully.")
+            request, "ลบบัญชีของคุณสำเร็จแล้ว")
         return redirect('index')

@@ -32,9 +32,9 @@
   <div class="filter-section mb-3">
     <form method="GET" class="row">
       <div class="form-group col-md-6">
-        <label for="category">Category:</label>
+        <label for="category">ประเภทสินค้า:</label>
         <select id="category" name="category" class="form-control" onchange="this.form.submit()">
-          <option value="">All</option>
+          <option value="">ทั้งหมด</option>
           {% for category in categories %}
           <option value="{{ category.category_name }}" {% if selected_category == category.category_name %}selected{%endif %}>
             {{ category.category_name }}
@@ -45,12 +45,12 @@
 
       <!-- Sort Section -->
       <div class="form-group col-md-6">
-        <label for="sort">Sort by:</label>
+        <label for="sort">เรียงลำดับ:</label>
         <select id="sort" name="sort" class="form-control" onchange="this.form.submit()">
-          <option value="">Select</option>
-          <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest</option>
-          <option value="priceAsc" {% if selected_sort == 'priceAsc' %}selected{% endif %}>Price: Low-High</option>
-          <option value="priceDesc" {% if selected_sort == 'priceDesc' %}selected{% endif %}>Price: High-Low</option>
+          <option value="">เลือก</option>
+          <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>ใหม่ล่าสุด</option>
+          <option value="priceAsc" {% if selected_sort == 'priceAsc' %}selected{% endif %}>ราคา: น้อย-มาก</option>
+          <option value="priceDesc" {% if selected_sort == 'priceDesc' %}selected{% endif %}>ราคา: มาก-น้อย</option>
         </select>
       </div>
     </form>
@@ -67,7 +67,7 @@
         <figcaption class="info-wrap border-top">
           <a href="{% url 'get_product' product.slug %}" class="title">
             <b>{{ product.product_name }}</b></a>
-          <div class="price mt-2">₹{{product.price}}.00</div>
+          <div class="price mt-2">฿{{product.price}}.00</div>
         </figcaption>
       </figure>
     </div>
@@ -80,12 +80,12 @@
       {% if products.has_previous %}
       <li class="page-item">
         <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
-          <span aria-hidden="true">&laquo; Previous</span>
+          <span aria-hidden="true">&laquo; ก่อนหน้า</span>
         </a>
       </li>
       {% else %}
       <li class="page-item disabled">
-        <a class="page-link">Previous</a>
+        <a class="page-link">ก่อนหน้า</a>
       </li>
       {% endif %}
 
@@ -98,12 +98,12 @@
       {% if products.has_next %}
       <li class="page-item">
         <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
-          <span aria-hidden="true">Next &raquo;</span>
+          <span aria-hidden="true">ถัดไป &raquo;</span>
         </a>
       </li>
       {% else %}
       <li class="page-item disabled">
-        <a class="page-link">Next</a>
+        <a class="page-link">ถัดไป</a>
       </li>
       {% endif %}
     </ul>

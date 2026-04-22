@@ -44,16 +44,16 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto" style="gap: 20px;">
-          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">หน้าแรก</a></li>
           {% if user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'wishlist' %}">Wishlist ({{request.user.wishlist.count}})</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'wishlist' %}">รายการโปรด ({{request.user.wishlist.count}})</a></li>
           {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'wishlist' %}">Wishlist</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'wishlist' %}">รายการโปรด</a></li>
           {% endif %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'order_history' %}">Your Orders</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'product_reviews' %}">Your Reviews</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'order_history' %}">คำสั่งซื้อของคุณ</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'product_reviews' %}">รีวิวของคุณ</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">ติดต่อเรา</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">เกี่ยวกับเรา</a></li>
         </ul>
       </div>
     </div>
@@ -65,14 +65,14 @@
         <div class="col-lg-2 col-4">
           <div class="brand-wrap">
             <a href="{% url 'index' %}" class="brand-link" style="text-decoration: none;">
-              <h2 class="logo-text">FootFusion</h2>
+              <h2 class="logo-text">SP Market</h2>
             </a>
           </div>
         </div>
         <div class="col-lg-6 col-sm-12">
           <form method="GET" action="{% url 'product_search' %}" class="search">
             <div class="input-group w-100">
-              <input type="text" class="form-control" name="q" placeholder="Search" value="{{ query|default:"" }}" />
+              <input type="text" class="form-control" name="q" placeholder="ค้นหาสินค้า" value="{{ query|default:"" }}" />
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
@@ -121,15 +121,15 @@
               <!-- Welcome Text and Logout Link -->
               <div class="text">
                 {% if request.user.is_authenticated %}
-                <span class="text-muted">Welcome, {{ request.user }}!</span>
+                <span class="text-muted">ยินดีต้อนรับ, {{ request.user }}!</span>
                 <div>
-                  <a href="{% url 'logout' %}">Logout</a>
+                  <a href="{% url 'logout' %}">ออกจากระบบ</a>
                 </div>
                 {% else %}
-                <span class="text-muted">Welcome</span>
+                <span class="text-muted">ยินดีต้อนรับ</span>
                 <div>
-                  <a href="{% url 'login' %}">Sign in</a> |
-                  <a href="{% url 'register' %}">Register</a>
+                  <a href="{% url 'login' %}">เข้าสู่ระบบ</a> |
+                  <a href="{% url 'register' %}">สมัครสมาชิก</a>
                 </div>
                 {% endif %}
               </div>

@@ -22,7 +22,7 @@ def get_product(request, slug):
             review = ProductReview.objects.filter(product=product, user=request.user).first()
         except Exception as e:
             print("No reviews found for this product", str(e))
-            messages.warning(request, "No reviews found for this product")
+            messages.warning(request, "ไม่พบรีวิวสำหรับสินค้านี้")
 
     rating_percentage = 0
     if product.reviews.exists():
@@ -41,7 +41,7 @@ def get_product(request, slug):
             review.product = product
             review.user = request.user
             review.save()
-            messages.success(request, "Review added successfully!")
+            messages.success(request, "เพิ่มรีวิวสำเร็จ!")
             return redirect('get_product', slug=slug)
     else:
         review_form = ReviewForm()
@@ -93,7 +93,7 @@ def edit_review(request, review_uid):
         review.stars = stars
         review.content = content
         review.save()
-        messages.success(request, "Your review has been updated successfully.")
+        messages.success(request, "อัปเดตรีวิวสำเร็จแล้ว")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     return JsonResponse({"detail": "Invalid request"}, status=400)
@@ -124,17 +124,17 @@ def dislike_review(request, review_uid):
 # delete review view
 def delete_review(request, slug, review_uid):
     if not request.user.is_authenticated:
-        messages.warning(request, "You need to be logged in to delete a review.")
+        messages.warning(request, "คุณต้องเข้าสู่ระบบก่อนจึงจะลบรีวิวได้")
         return redirect('login')
 
     review = ProductReview.objects.filter(uid=review_uid, product__slug=slug, user=request.user).first()
     
     if not review:
-        messages.error(request, "Review not found.")
+        messages.error(request, "ไม่พบรีวิว")
         return redirect('get_product', slug=slug)
 
     review.delete()
-    messages.success(request, "Your review has been deleted.")
+    messages.success(request, "ลบรีวิวสำเร็จแล้ว")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -143,7 +143,7 @@ def delete_review(request, slug, review_uid):
 def add_to_wishlist(request, uid):
     variant = request.GET.get('size')
     if not variant:
-        messages.warning(request, 'Please select a size variant before adding to the wishlist!')
+        messages.warning(request, 'กรุณาเลือกขนาดก่อนเพิ่มในรายการโปรด!')
         return redirect(request.META.get('HTTP_REFERER'))
 
     product = get_object_or_404(Product, uid=uid)
@@ -152,7 +152,7 @@ def add_to_wishlist(request, uid):
         user=request.user, product=product, size_variant=size_variant)
 
     if created:
-        messages.success(request, "Product added to Wishlist!")
+        messages.success(request, "เพิ่มสินค้าในรายการโปรดแล้ว!")
 
     return redirect(reverse('wishlist'))
 
@@ -170,7 +170,7 @@ def remove_from_wishlist(request, uid):
     else:
         Wishlist.objects.filter(user=request.user, product=product).delete()
 
-    messages.success(request, "Product removed from wishlist!")
+    messages.success(request, "ลบสินค้าออกจากรายการโปรดแล้ว!")
     return redirect(reverse('wishlist'))
 
 
@@ -187,7 +187,7 @@ def move_to_cart(request, uid):
     wishlist = Wishlist.objects.filter(user=request.user, product=product).first()
 
     if not wishlist:
-        messages.error(request, "Item not found in wishlist.")
+        messages.error(request, "ไม่พบสินค้าในรายการโปรด")
         return redirect('wishlist')
 
     size_variant = wishlist.size_variant
@@ -201,5 +201,5 @@ def move_to_cart(request, uid):
         cart_item.quantity += 1
         cart_item.save()
 
-    messages.success(request, "Product moved to cart successfully!")
+    messages.success(request, "ย้ายสินค้าไปตะกร้าสำเร็จ!")
     return redirect('cart')

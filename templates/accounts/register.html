@@ -1,5 +1,5 @@
 {% extends "base/base.html" %} {% load static %} {% load socialaccount %}
-{% block title %}Register{% endblock %}
+{% block title %}สมัครสมาชิก{% endblock %}
 {% block start %}
 
 <!-- ============================ COMPONENT Sign-Up ================================= -->
@@ -8,7 +8,7 @@
     <div class="row justify-content-center w-100">
       <div class="col-xl-4">
         <div class="card mb-4">
-          <div class="card-header" style="text-align: center; font-size: 25px;">Sign Up</div>
+          <div class="card-header" style="text-align: center; font-size: 25px;">สมัครสมาชิก</div>
           <div class="card-body">
             <form method="POST">
               {% csrf_token %} {% include "base/alert.html" %}
@@ -18,7 +18,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Username"
+                  placeholder="ชื่อผู้ใช้"
                   name="username"
                   type="text"
                   autocomplete="username"/>
@@ -28,7 +28,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="First Name"
+                  placeholder="ชื่อ"
                   name="first_name"
                   type="text"
                   autocomplete="given-name"/>
@@ -38,7 +38,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Last Name"
+                  placeholder="นามสกุล"
                   name="last_name"
                   type="text"
                   autocomplete="family-name"/>
@@ -48,7 +48,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Email"
+                  placeholder="อีเมล"
                   name="email"
                   type="text"
                   autocomplete="email"/>
@@ -58,7 +58,7 @@
                 <input
                   class="form-control"
                   required
-                  placeholder="Password"
+                  placeholder="รหัสผ่าน"
                   name="password"
                   type="password"
                 />
@@ -66,13 +66,13 @@
               
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">
-                  Register
+                  สมัครสมาชิก
                 </button>
 
               <!-- form-group end -->
                
                 <p class="text-center mt-4">
-                  Already have account? <a href="{% url 'login' %}">Sign in</a>
+                  มีบัญชีอยู่แล้ว? <a href="{% url 'login' %}">เข้าสู่ระบบ</a>
                 </p>
 
                 <div class="line"></div>
@@ -80,14 +80,14 @@
                 <div class="media-options">
                   <a href="{% provider_login_url 'facebook' %}" class="field facebook">
                     <i class="bx bxl-facebook facebook-icon"></i>
-                    <span>Login with Facebook</span>
+                    <span>เข้าสู่ระบบด้วย Facebook</span>
                   </a>
                 </div>
 
                 <div class="media-options">
                   <a href="{% provider_login_url 'google' %}?next=/" class="field google">
                     <img src="{% static 'images/google.png' %}" alt="" class="google-img" />
-                    <span>Login with Google</span>
+                    <span>เข้าสู่ระบบด้วย Google</span>
                   </a>
                 </div>
               </div>

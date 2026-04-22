@@ -1,5 +1,5 @@
 {% extends "base/base.html"%}
-{% block title %}Search Product{% endblock %}
+{% block title %}ค้นหาสินค้า{% endblock %}
 {% block start %}
 
 <style>
@@ -11,9 +11,9 @@
 <section class="section-content padding-y">
   <div class="container">
     {% if query %}
-    <h3>Showing results for '{{ query }}':</h3>
+    <h3>ผลการค้นหาสำหรับ '{{ query }}':</h3>
     {% else %}
-    <h3>No search query entered.</h3>
+    <h3>ไม่ได้ป้อนคำค้นหา</h3>
     {% endif %}
 
     <div class="row">
@@ -26,14 +26,14 @@
           <figcaption class="info-wrap border-top">
             <a href="{% url 'get_product' product.slug %}" class="title">
               <b>{{ product.product_name }}</b></a>
-            <div class="price mt-2">₹{{ product.price }}.00</div>
+            <div class="price mt-2">฿{{ product.price }}.00</div>
           </figcaption>
         </figure>
       </div>
 
       {% endfor %} {% elif query %}
       <div class="col-md-12">
-        <p>No products found.</p>
+        <p>ไม่พบสินค้า</p>
       </div>
       {% endif %}
 

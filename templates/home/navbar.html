@@ -36,7 +36,7 @@
 </style>
 
 <header class="section-header">
-  <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+  <nav class="navbar navbar-light navbar-expand-md bg-white border-bottom">
     <div class="container">
       <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,9 @@
         <div class="col-lg-2 col-4">
           <div class="brand-wrap">
             <a href="{% url 'index' %}" class="brand-link" style="text-decoration: none;">
-              <h2 class="logo-text">SP Market</h2>
+              <div class="logo-css">
+                <span class="logo-sp">SP</span><span class="logo-market">MARKET</span>
+              </div>
             </a>
           </div>
         </div>
@@ -144,26 +146,47 @@
 <style>
   /* Unified Color System for Navbar */
   :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --accent-color: #fbbf24;
-    --accent-dark: #f59e0b;
-    --text-dark: #1e293b;
+    --primary-color: #16a34a;
+    --primary-dark: #15803d;
+    --accent-color: #f59e0b;
+    --accent-dark: #d97706;
+    --text-dark: #1f2937;
     --white: #ffffff;
   }
 
   /* Brand Styling */
-  .brand-link .logo-text {
-    color: var(--primary-color);
-    font-weight: 800;
-    font-size: 1.75rem;
-    margin: 0;
+  .logo-css {
+    display: inline-flex;
+    align-items: center;
+    background: #f0fdf4;
+    border-radius: 50px;
+    padding: 6px 18px 6px 14px;
+    border: 1.5px solid #bbf7d0;
     transition: all 0.3s ease;
+    gap: 10px;
   }
 
-  .brand-link:hover .logo-text {
-    color: var(--accent-color);
+  .brand-link:hover .logo-css {
     transform: scale(1.05);
+    background: #dcfce7;
+  }
+
+  .logo-sp {
+    font-size: 1.6rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #16a34a;
+    letter-spacing: -1px;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .logo-market {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1f2937;
+    letter-spacing: 1px;
+    line-height: 1;
   }
 
   /* Search Button */
@@ -174,22 +197,22 @@
   }
 
   .search .btn-primary:hover {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: var(--text-dark);
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--white);
     transform: scale(1.05);
   }
 
-  /* Navigation Links */
+  /* Navigation Links — dark text, green highlight */
   .navbar-nav .nav-link {
-    color: var(--text-dark);
+    color: var(--text-dark) !important;
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
   }
 
   .navbar-nav .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
   }
 
   .navbar-nav .nav-link::after {
@@ -199,7 +222,7 @@
     left: 50%;
     width: 0;
     height: 2px;
-    background: var(--accent-color);
+    background: var(--primary-color);
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
@@ -215,14 +238,14 @@
   }
 
   .icon:hover {
-    color: var(--accent-color);
+    color: var(--primary-dark);
     transform: scale(1.1);
   }
 
   /* Badge */
   .badge {
-    background-color: var(--accent-color);
-    color: var(--text-dark);
+    background-color: var(--primary-color);
+    color: var(--white);
   }
 
   /* Welcome text links */
@@ -233,7 +256,12 @@
   }
 
   .text a:hover {
-    color: var(--accent-color);
+    color: var(--primary-dark);
+  }
+
+  /* Welcome text muted */
+  .text .text-muted {
+    color: var(--text-dark) !important;
   }
 
   /* Responsive adjustments */

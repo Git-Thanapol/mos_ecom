@@ -15,9 +15,9 @@
 
   /* Unified Color System */
   :root {
-    --primary-color: #6366f1;
-    --accent-color: #fbbf24;
-    --text-dark: #1e293b;
+    --primary-color: #16a34a;
+    --accent-color: #f59e0b;
+    --text-dark: #1f2937;
   }
 
   .like-btn {
@@ -88,6 +88,76 @@
       padding: 0.3rem 0.8rem;
       font-size: 0.9rem;
     }
+  }
+
+  .line-contact-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: #ffffff;
+    border: 1.5px solid var(--primary-color);
+    border-left: 5px solid var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.08);
+    transition: all 0.25s ease;
+  }
+
+  .line-contact-card:hover {
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.18);
+    transform: translateY(-2px);
+  }
+
+  .line-icon-wrap {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(22, 163, 74, 0.1);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 1.6rem;
+  }
+
+  .line-text { flex: 1 1 auto; }
+
+  .line-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0 0 0.2rem 0;
+  }
+
+  .line-subtitle {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .line-btn {
+    flex: 0 0 auto;
+    background: var(--primary-color);
+    color: #ffffff;
+    padding: 0.5rem 1.1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .line-btn:hover {
+    background: #15803d;
+    color: #ffffff;
+    transform: scale(1.05);
+    text-decoration: none;
+  }
+
+  @media (max-width: 576px) {
+    .line-contact-card { flex-direction: column; text-align: center; }
+    .line-btn { width: 100%; text-align: center; }
   }
 </style>
 
@@ -175,6 +245,7 @@
             <div class="form-row">
               {% if sorted_size_variants %}
               <div class="form-group col-md">
+                {% comment %} Add Line contact card here {% endcomment %}
                 <label>เลือกขนาด</label>
                 <div class="mt-1">
                   {% for size in sorted_size_variants %}
@@ -211,10 +282,133 @@
                 </a>
               </div>
             </div>
+
+            <!-- LINE Contact Card -->
+            <div class="line-contact-card mt-4">
+              <div class="line-icon-wrap">
+                <i class="fa-brands fa-line"></i>
+              </div>
+              <div class="line-text">
+                <h5 class="line-title">มีคำถาม? สอบถามเราทาง LINE</h5>
+                <p class="line-subtitle">ตอบกลับอย่างรวดเร็ว — ปรึกษาสินค้า ขนาด และการจัดส่ง</p>
+              </div>
+              <a href="https://lin.ee/XdEN9pl" target="_blank" rel="noopener noreferrer" class="line-btn">
+                <i class="fa-brands fa-line mr-1"></i> แชทบน LINE
+              </a>
+            </div>
           </article>
         </main>
       </div>
     </div>
+
+    <!-- Trust Banner -->
+    <div class="trust-banner my-4">
+      <div class="trust-card trust-white">
+        <div class="trust-icon"><i class="fas fa-medal"></i></div>
+        <div class="trust-text">
+          <span class="trust-sub">รับประกันสินค้า</span>
+          <span class="trust-main">แท้ 100%</span>
+        </div>
+      </div>
+      <div class="trust-card trust-green">
+        <div class="trust-icon"><i class="fas fa-shipping-fast"></i></div>
+        <div class="trust-text">
+          <span class="trust-sub">การันตีส่งเร็ว</span>
+          <span class="trust-main">ส่งด่วนทันใจ</span>
+        </div>
+      </div>
+      <div class="trust-card trust-white">
+        <div class="trust-icon"><i class="fas fa-box-open"></i></div>
+        <div class="trust-text">
+          <span class="trust-sub">การันตีสินค้า</span>
+          <span class="trust-main">พร้อมส่ง</span>
+        </div>
+      </div>
+      <div class="trust-card trust-green">
+        <div class="trust-icon"><i class="fas fa-award"></i></div>
+        <div class="trust-text">
+          <span class="trust-sub">รับประกัน</span>
+          <span class="trust-main">คุณภาพ</span>
+        </div>
+      </div>
+      <div class="trust-card trust-white">
+        <div class="trust-icon"><i class="fas fa-handshake"></i></div>
+        <div class="trust-text">
+          <span class="trust-sub">ซื้อง่าย</span>
+          <span class="trust-main">วางใจได้</span>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .trust-banner {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .trust-card {
+        flex: 1 1 0;
+        min-width: 140px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .trust-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      }
+
+      .trust-white {
+        background: #dcfce7;
+        border: 2px solid #86efac;
+      }
+
+      .trust-white .trust-icon { color: #16a34a; }
+      .trust-white .trust-sub  { color: #166534; }
+      .trust-white .trust-main { color: #15803d; }
+
+      .trust-green {
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        border: 2px solid #15803d;
+      }
+
+      .trust-green .trust-icon { color: #bbf7d0; }
+      .trust-green .trust-sub  { color: #dcfce7; }
+      .trust-green .trust-main { color: #ffffff; }
+
+      .trust-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+
+      .trust-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.3;
+      }
+
+      .trust-sub {
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+
+      .trust-main {
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      @media (max-width: 576px) {
+        .trust-card {
+          min-width: calc(50% - 10px);
+          flex: 1 1 calc(50% - 10px);
+        }
+      }
+    </style>
 
     <!-- Related Products Section -->
     <h3 class="title padding-y-sm">สินค้าที่เกี่ยวข้อง</h3>
@@ -424,20 +618,20 @@
 <style>
   /* Unified Color System */
   :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #a5b4fc;
-    --accent-color: #fbbf24;
-    --accent-dark: #f59e0b;
-    --success-color: #10b981;
+    --primary-color: #16a34a;
+    --primary-dark: #15803d;
+    --primary-light: #86efac;
+    --accent-color: #f59e0b;
+    --accent-dark: #d97706;
+    --success-color: #16a34a;
     --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --text-dark: #1e293b;
-    --text-muted: #64748b;
-    --text-light: #94a3b8;
-    --bg-light: #f8fafc;
+    --danger-color: #dc2626;
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --bg-light: #f5f1e8;
     --bg-white: #ffffff;
-    --border-color: #e2e8f0;
+    --border-color: #e5e1d3;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

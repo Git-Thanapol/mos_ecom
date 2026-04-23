@@ -36,7 +36,7 @@ BASE_URL = config("BASE_URL", default="http://127.0.0.1:8000")
 
 # Application definition
 
-SITE_ID = 3
+SITE_ID = 7
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -174,9 +174,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'th'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 

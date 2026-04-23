@@ -1,5 +1,5 @@
 {% load static %} {% block start %}
-<footer class="bg-dark text-white">
+<footer class="bg-white text-dark border-top">
   <div class="container py-5">
     <!-- Main Footer Content -->
     <div class="row g-4">
@@ -93,7 +93,7 @@
           </div>
           <div class="contact-item mb-2">
             <i class="fa-brands fa-line contact-icon me-2"></i>
-            <small><a href="#" class="footer-link">LINE: @swiftmarket</a></small>
+            <small><a href="https://lin.ee/XdEN9pl" class="footer-link">LINE: @swiftmarket</a></small>
           </div>
 
         </div>
@@ -120,14 +120,30 @@
 </footer>
 
 <style>
-  /* Unified Color System */
+  /* Unified Color System — footer on white background */
   :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --accent-color: #fbbf24;
-    --accent-dark: #f59e0b;
-    --text-light: rgba(255, 255, 255, 0.75);
+    --primary-color: #16a34a;
+    --primary-dark: #15803d;
+    --accent-color: #f59e0b;
+    --accent-dark: #d97706;
+    --footer-text: #1f2937;
+    --footer-muted: #6b7280;
     --text-white: #ffffff;
+  }
+
+  footer.bg-white {
+    color: var(--footer-text);
+  }
+
+  /* Override Bootstrap's text-light (designed for dark bg) on white footer */
+  footer.bg-white .text-light {
+    color: var(--footer-muted) !important;
+    opacity: 1 !important;
+  }
+
+  footer.bg-white hr.border-secondary {
+    border-color: var(--border-color) !important;
+    opacity: 0.6;
   }
 
   /* Modern Footer Styles */
@@ -138,7 +154,10 @@
   }
 
   .section-heading {
-    color: var(--primary-color);
+    color: var(--footer-text);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 8px;
+    display: inline-block;
   }
 
   .footer-links {
@@ -146,14 +165,14 @@
   }
 
   .footer-link {
-    color: var(--text-light);
+    color: var(--footer-muted);
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.9rem;
   }
 
   .footer-link:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
     transform: translateX(3px);
   }
 
@@ -176,7 +195,7 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(22, 163, 74, 0.1);
     color: var(--primary-color);
     border-radius: 50%;
     text-decoration: none;
@@ -185,10 +204,10 @@
   }
 
   .social-link:hover {
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: var(--text-white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
   }
 
   .contact-item {

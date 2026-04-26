@@ -1,7 +1,6 @@
 import os
 import json
 import uuid
-import razorpay
 from weasyprint import CSS, HTML
 from products.models import *
 from django.urls import reverse
@@ -136,7 +135,6 @@ def add_to_cart(request, uid):
 @login_required
 def cart(request):
     cart_obj = None
-    payment = None
     user = request.user
 
     try:
@@ -174,27 +172,9 @@ def cart(request):
             messages.success(request, 'ใช้คูปองสำเร็จ')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    if cart_obj:
-        cart_total_in_paise = int(
-            cart_obj.get_cart_total_price_after_coupon() * 100)
-
-        if cart_total_in_paise < 100:
-            messages.warning(
-                request, 'ยอดรวมในตะกร้าต่ำกว่ายอดขั้นต่ำที่กำหนด (฿1.00) กรุณาเพิ่มสินค้าก่อนชำระเงิน')
-            return redirect('index')
-
-        client = razorpay.Client(
-            auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_KEY))
-        payment = client.order.create(
-            {'amount': cart_total_in_paise, 'currency': 'INR', 'payment_capture': 1})
-        cart_obj.razorpay_order_id = payment['id']
-        cart_obj.save()
-
     context = {
         'cart': cart_obj,
-        'payment': payment,
         'quantity_range': range(1, 6),
-        'base_url': settings.BASE_URL,
     }
     return render(request, 'accounts/cart.html', context)
 
@@ -238,18 +218,24 @@ def remove_coupon(request, cart_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-# Payment success view
+@require_POST
+@login_required
+def place_order(request):
+    try:
+        cart_obj = Cart.objects.get(is_paid=False, user=request.user)
+    except Cart.DoesNotExist:
+        messages.warning(request, 'ตะกร้าของคุณว่างเปล่า')
+        return redirect('cart')
+
+    cart_obj.is_paid = True
+    cart_obj.save()
+    order = create_order(cart_obj)
+    return redirect(f"{reverse('success')}?order_id={order.order_id}")
+
+
 def success(request):
     order_id = request.GET.get('order_id')
-    cart = get_object_or_404(Cart, razorpay_order_id=order_id)
-
-    # Mark the cart as paid
-    cart.is_paid = True
-    cart.save()
-
-    # Create the order after payment is confirmed
-    order = create_order(cart)
-
+    order = get_object_or_404(Order, order_id=order_id)
     context = {'order_id': order_id, 'order': order}
     return render(request, 'payment_success/payment_success.html', context)
 
@@ -368,12 +354,13 @@ def order_history(request):
 
 # Create an order view
 def create_order(cart):
+    order_id = f"ORD-{str(uuid.uuid4())[:8].upper()}"
     order, created = Order.objects.get_or_create(
         user=cart.user,
-        order_id=cart.razorpay_order_id,
-        payment_status="Paid",
+        order_id=order_id,
+        payment_status="ชำระแล้ว",
         shipping_address=cart.user.profile.shipping_address,
-        payment_mode="Razorpay",
+        payment_mode="โอนเงิน",
         order_total_price=cart.get_cart_total(),
         coupon=cart.coupon,
         grand_total=cart.get_cart_total_price_after_coupon(),

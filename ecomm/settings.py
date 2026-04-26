@@ -212,10 +212,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = False
 
-# RazorPay API KEYS
-RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID')
-RAZORPAY_SECRET_KEY = config('RAZORPAY_SECRET_KEY')
-
 # Auth Backends Configurations
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",

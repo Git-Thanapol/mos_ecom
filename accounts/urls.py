@@ -36,7 +36,8 @@ urlpatterns = [
     path('remove-cart/<uid>/', remove_cart, name="remove_cart"),
     path('remove-coupon/<cart_id>/', remove_coupon, name="remove_coupon"),
 
-    # Success url after payment is done.
+    # Checkout and success urls
+    path('place-order/', place_order, name='place_order'),
     path('success/', success, name="success"),
 
     # Order history and details urls

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-FootFusion — a Django 5.1 eCommerce platform for selling shoes. Features product catalog with variants, cart/checkout, Razorpay payments, email verification, social auth (Google/Facebook), PDF invoices, reviews, wishlist, and coupon discounts.
+FootFusion — a Django 5.1 eCommerce platform for selling shoes. Features product catalog with variants, cart/checkout, bank-transfer checkout (THB), email verification, social auth (Google/Facebook), PDF invoices, reviews, wishlist, and coupon discounts.
 
 ## Common Commands
 
@@ -39,7 +39,6 @@ Copy `.env.example` to `.env` and fill in all values. Required variables:
 - `DEBUG` — `True` for local dev
 - `BASE_URL` — e.g. `http://127.0.0.1:8000` (used in emails and social auth callbacks)
 - `ALLOWED_HOSTS` — comma-separated hosts
-- `RAZORPAY_KEY_ID` / `RAZORPAY_SECRET_KEY` — payment integration
 - `SOCIAL_AUTH_FACEBOOK_KEY` / `SOCIAL_AUTH_FACEBOOK_SECRET` — Facebook OAuth
 - `EMAIL_HOST_USER` / `EMAIL_HOST_PASSWORD` — Gmail app password for transactional email
 
@@ -65,7 +64,7 @@ Config is loaded via `python-decouple` from `.env`.
 
 **Images**: All images use `URLField` — no file uploads. Products, categories, and user profiles store image URLs.
 
-**Cart lifecycle**: A `Cart` is created per user. `is_paid=False` means active/unpaid. On successful Razorpay payment, `is_paid=True` and an `Order` record is created from cart items.
+**Cart lifecycle**: A `Cart` is created per user. `is_paid=False` means active/unpaid. On checkout (`place_order` POST), `is_paid=True` and an `Order` record is created from cart items. Prices are in Thai Baht (THB, ฿).
 
 **Email verification**: Registration sends a token-based activation link. The token is stored on `Profile`; users must verify before login is allowed.
 

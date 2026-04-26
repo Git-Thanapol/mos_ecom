@@ -79,9 +79,12 @@
           </table>
 
           <div class="card-body border-top">
-            <button id="rzp-button1" class="btn btn-primary float-md-right">
-              ชำระเงิน <i class="fa fa-chevron-right"></i>
-            </button>
+            <form method="POST" action="{% url 'place_order' %}" id="checkout-form">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary float-md-right">
+                ยืนยันคำสั่งซื้อ <i class="fa fa-chevron-right"></i>
+              </button>
+            </form>
 
             <a href="{% url 'index' %}" class="btn btn-light">
               <i class="fa fa-chevron-left"></i> ช้อปปิ้งต่อ
@@ -159,48 +162,7 @@
   <!-- container .//  -->
 </section>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
 <script>
-  var options = {
-    key: "rzp_test_5XxorWz3z1N2m5",
-    amount: "{{ cart.get_cart_total_price_after_coupon|floatformat:0 }}",
-    currency: "INR",
-    name: "Django Ecommerce Site",
-    description: "Purchased",
-    order_id: "{{ payment.id }}",
-
-    handler: function (response) {
-      console.log("Success");
-      window.location.href = `{{ base_url }}/accounts/success/?order_id={{ payment.id }}`;
-    },
-    prefill: {
-      name: "Gaurav Kumar",
-      email: "gaurav.kumar@example.com",
-      contact: "9000090000",
-    },
-    notes: {
-      address: "Razorpay Corporate Office",
-    },
-    theme: {
-      color: "#3399cc",
-    },
-  };
-  var rzp1 = new Razorpay(options);
-  rzp1.on("payment.failed", function (response) {
-    alert(response.error.code);
-    alert(response.error.description);
-    alert(response.error.source);
-    alert(response.error.step);
-    alert(response.error.reason);
-    alert(response.error.metadata.order_id);
-    alert(response.error.metadata.payment_id);
-  });
-  document.getElementById("rzp-button1").onclick = function (e) {
-    rzp1.open();
-    e.preventDefault();
-  };
-
   function updateCartItem(selectElement, cartItemId) {
     const quantity = selectElement.value;
 

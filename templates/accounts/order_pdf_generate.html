@@ -1,13 +1,13 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <title>{% block title %}Invoice - Order #{{ order.order_id }}{% endblock %}</title>
+  <title>{% block title %}ใบแจ้งหนี้ - คำสั่งซื้อ #{{ order.order_id }}{% endblock %}</title>
 
   <style>
     /* Modern Color System */
@@ -269,17 +269,15 @@
 
 <body>
   <div class="container">
-    <!-- Invoice Header -->
     <div class="invoice-header">
-      <h1 class="invoice-title">INVOICE</h1>
-      <p class="invoice-subtitle">Order #{{ order.order_id }}</p>
+      <h1 class="invoice-title">ใบแจ้งหนี้</h1>
+      <p class="invoice-subtitle">คำสั่งซื้อ #{{ order.order_id }}</p>
     </div>
 
-    <!-- Order Items Section -->
     <div class="modern-card">
       <div class="card-header">
         <h2 class="card-title">
-          Order Items
+          รายการสินค้า
         </h2>
       </div>
       <div class="card-body">
@@ -287,11 +285,11 @@
           <table class="modern-table">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Size</th>
-                <th>Color</th>
-                <th>Quantity</th>
-                <th style="text-align: right;">Price</th>
+                <th>สินค้า</th>
+                <th>ขนาด</th>
+                <th>สี</th>
+                <th>จำนวน</th>
+                <th style="text-align: right;">ราคา</th>
               </tr>
             </thead>
             <tbody>
@@ -301,12 +299,12 @@
                   <strong>{{ item.product.product_name }}</strong>
                 </td>
                 <td>
-                  <span class="badge badge-primary">{{ item.size_variant.size_name|default:"N/A" }}</span>
+                  <span class="badge badge-primary">{{ item.size_variant.size_name|default:"ไม่มีข้อมูล" }}</span>
                 </td>
                 {% if item.size_variant %}
                 {% for color in item.product.color_variant.all %}
                 <td>
-                  <span class="badge badge-primary">{{ color.color_name|default:"N/A" }}</span>
+                  <span class="badge badge-primary">{{ color.color_name|default:"ไม่มีข้อมูล" }}</span>
                 </td>
                 {% endfor %}
                 {% endif %}
@@ -314,7 +312,7 @@
                   <span class="badge badge-accent">{{ item.quantity }}</span>
                 </td>
                 <td style="text-align: right;">
-                  <strong>₹{{ item.product_price }}</strong>
+                  <strong>฿{{ item.product_price }}</strong>
                 </td>
               </tr>
               {% endfor %}
@@ -325,26 +323,25 @@
     </div>
 
     <div class="row">
-      <!-- Order Information -->
       <div class="col-8">
         <div class="modern-card">
           <div class="card-header">
             <h2 class="card-title">
-              Order Information
+              ข้อมูลคำสั่งซื้อ
             </h2>
           </div>
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item">
-                <span class="info-label">Order ID</span>
+                <span class="info-label">รหัสคำสั่งซื้อ</span>
                 <span class="info-value">{{ order.order_id }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Order Date</span>
-                <span class="info-value">{{ order.order_date|date:"F j, Y" }}</span>
+                <span class="info-label">วันที่สั่งซื้อ</span>
+                <span class="info-value">{{ order.order_date|date:"j F Y" }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Customer</span>
+                <span class="info-label">ลูกค้า</span>
                 <span class="info-value">
                   {% if order.user.first_name or order.user.last_name %}
                   {{ order.user.first_name }} {{ order.user.last_name }}
@@ -356,7 +353,7 @@
                 </span>
               </div>
               <div class="info-item">
-                <span class="info-label">Payment Status</span>
+                <span class="info-label">สถานะการชำระเงิน</span>
                 <span class="info-value">
                   <span
                     class="badge {% if order.payment_status == 'Paid' %}badge-success{% else %}badge-accent{% endif %}">
@@ -365,40 +362,39 @@
                 </span>
               </div>
               <div class="info-item">
-                <span class="info-label">Payment Mode</span>
+                <span class="info-label">ช่องทางการชำระเงิน</span>
                 <span class="info-value">{{ order.payment_mode }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Shipping Address</span>
-                <span class="info-value">{{ order.shipping_address|default:"Not Provided" }}</span>
+                <span class="info-label">ที่อยู่สำหรับจัดส่ง</span>
+                <span class="info-value">{{ order.shipping_address|default:"ไม่ได้ระบุ" }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Payment Summary -->
       <div class="col-4">
         <div class="modern-card">
           <div class="card-header">
             <h2 class="card-title">
-              Payment Summary
+              สรุปยอดการชำระเงิน
             </h2>
           </div>
           <div class="card-body">
             <div class="summary-item">
-              <span class="info-label">Subtotal</span>
-              <span class="info-value">₹{{ order.order_total_price }}</span>
+              <span class="info-label">ยอดรวมสินค้า</span>
+              <span class="info-value">฿{{ order.order_total_price }}</span>
             </div>
             <div class="summary-item">
-              <span class="info-label">Coupon Discount</span>
-              <span class="info-value discount-value">-₹{{ order.coupon.discount_amount|default:"0" }}</span>
+              <span class="info-label">ส่วนลดจากคูปอง</span>
+              <span class="info-value discount-value">-฿{{ order.coupon.discount_amount|default:"0" }}</span>
             </div>
             <hr class="summary-divider">
             <div class="total-item">
               <div class="summary-item">
-                <span class="info-label">Grand Total</span>
-                <span class="info-value">₹{{ order.grand_total }}</span>
+                <span class="info-label">ยอดรวมสุทธิ</span>
+                <span class="info-value">฿{{ order.grand_total }}</span>
               </div>
             </div>
           </div>

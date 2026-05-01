@@ -90,8 +90,37 @@
                     <span>เข้าสู่ระบบด้วย Google</span>
                   </a>
                 </div>
+
+                <div class="media-options">
+                  <a href="{% url 'line_login' %}" class="field line-field">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="white" style="margin-right:8px;flex-shrink:0;">
+                      <path d="M19.365 9.89c.02-.175.03-.35.03-.525C19.395 5.28 15.418 2 10.532 2 5.643 2 1.67 5.303 1.67 9.365c0 3.641 3.137 6.691 7.378 7.27.287.063.679.19.778.438.089.227.058.582.028.812l-.126.762c-.038.227-.177.889.778.484.955-.405 5.155-3.036 7.034-5.197h.001c1.297-1.43 1.925-2.886 1.925-4.569l-.1-.475z"/>
+                    </svg>
+                    <span>สมัครสมาชิกด้วย LINE</span>
+                  </a>
+                </div>
               </div>
             </form>
+
+            <style>
+              .line-field {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #06C755;
+                color: white;
+                border-radius: 6px;
+                padding: 10px 16px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background-color 0.2s;
+              }
+              .line-field:hover {
+                background-color: #05a847;
+                color: white;
+                text-decoration: none;
+              }
+            </style>
           </div>
         </div>
       </div>

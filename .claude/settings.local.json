@@ -6,7 +6,9 @@
       "Bash(python manage.py shell -c \"from django.contrib.sites.models import Site; Site.objects.update_or_create\\(id=1, defaults={'domain': '127.0.0.1:8000', 'name': 'localhost'}\\); print\\('Done'\\)\")",
       "Bash(\"./venv/Scripts/python.exe\" manage.py shell -c \"from django.contrib.sites.models import Site; Site.objects.update_or_create\\(id=1, defaults={'domain': '127.0.0.1:8000', 'name': 'localhost'}\\); print\\('Done'\\)\")",
       "Bash(\"./venv/Scripts/python.exe\" manage.py makemigrations accounts --name remove_razorpay_fields)",
-      "Bash(\"./venv/Scripts/python.exe\" manage.py migrate)"
+      "Bash(\"./venv/Scripts/python.exe\" manage.py migrate)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Thana\\\\GitHub\\\\Django-eCommerce-Website\" -Recurse -Name)",
+      "Bash(Select-String \"accounts\")"
     ]
   }
 }

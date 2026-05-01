@@ -1,6 +1,9 @@
 import os
 import json
 import uuid
+import secrets
+import requests
+from urllib.parse import urlencode
 from weasyprint import CSS, HTML
 from products.models import *
 from django.urls import reverse
@@ -394,6 +397,92 @@ def order_details(request, order_id):
         'grand_total': order.get_order_total_price()
     }
     return render(request, 'accounts/order_details.html', context)
+
+
+def line_login(request):
+    state = secrets.token_urlsafe(16)
+    request.session['line_oauth_state'] = state
+    request.session['line_next_url'] = request.GET.get('next', '/')
+
+    params = {
+        'response_type': 'code',
+        'client_id': settings.LINE_CHANNEL_ID,
+        'redirect_uri': settings.LINE_REDIRECT_URI,
+        'state': state,
+        'scope': 'profile openid email',
+    }
+    return redirect(f"https://access.line.me/oauth2/v2.1/authorize?{urlencode(params)}")
+
+
+def line_callback(request):
+    error = request.GET.get('error')
+    if error:
+        messages.error(request, 'การเข้าสู่ระบบด้วย LINE ถูกยกเลิก')
+        return redirect('login')
+
+    code = request.GET.get('code')
+    state = request.GET.get('state')
+
+    if not code or state != request.session.get('line_oauth_state'):
+        messages.error(request, 'การยืนยันตัวตนผ่าน LINE ล้มเหลว')
+        return redirect('login')
+
+    # Exchange authorization code for access token
+    token_resp = requests.post(
+        'https://api.line.me/oauth2/v2.1/token',
+        data={
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': settings.LINE_REDIRECT_URI,
+            'client_id': settings.LINE_CHANNEL_ID,
+            'client_secret': settings.LINE_CHANNEL_SECRET,
+        },
+        headers={'Content-Type': 'application/x-www-form-urlencoded'},
+        timeout=10,
+    )
+
+    if token_resp.status_code != 200:
+        messages.error(request, 'ไม่สามารถยืนยันตัวตนผ่าน LINE ได้')
+        return redirect('login')
+
+    access_token = token_resp.json().get('access_token')
+
+    # Fetch LINE user profile
+    profile_resp = requests.get(
+        'https://api.line.me/v2/profile',
+        headers={'Authorization': f'Bearer {access_token}'},
+        timeout=10,
+    )
+
+    if profile_resp.status_code != 200:
+        messages.error(request, 'ไม่สามารถดึงข้อมูลโปรไฟล์ LINE ได้')
+        return redirect('login')
+
+    line_data = profile_resp.json()
+    line_user_id = line_data.get('userId')
+    display_name = line_data.get('displayName', '')
+    picture_url = line_data.get('pictureUrl', '')
+
+    username = f"line_{line_user_id}"
+    user_obj = User.objects.filter(username=username).first()
+
+    if user_obj:
+        login(request, user_obj, backend='django.contrib.auth.backends.ModelBackend')
+        messages.success(request, f'ยินดีต้อนรับกลับ, {display_name}!')
+    else:
+        user_obj = User.objects.create_user(username=username, first_name=display_name, password=None)
+        profile = user_obj.profile
+        profile.is_email_verified = True
+        if picture_url:
+            profile.profile_image = picture_url
+        profile.save()
+        login(request, user_obj, backend='django.contrib.auth.backends.ModelBackend')
+        messages.success(request, f'สร้างบัญชีด้วย LINE สำเร็จ! ยินดีต้อนรับ, {display_name}!')
+
+    next_url = request.session.pop('line_next_url', '/')
+    if url_has_allowed_host_and_scheme(url=next_url, allowed_hosts=request.get_host()):
+        return redirect(next_url)
+    return redirect('index')
 
 
 # Delete user account feature

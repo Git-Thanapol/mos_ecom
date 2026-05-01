@@ -47,4 +47,8 @@ urlpatterns = [
 
     # Delete user account url
     path('delete-account/', delete_account, name='delete_account'),
+
+    # LINE Login OAuth
+    path('line/login/', line_login, name='line_login'),
+    path('line/callback/', line_callback, name='line_callback'),
 ]

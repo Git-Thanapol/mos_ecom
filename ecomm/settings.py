@@ -71,6 +71,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
+# LINE Login credentials
+LINE_CHANNEL_ID = config('LINE_CHANNEL_ID', default='')
+LINE_CHANNEL_SECRET = config('LINE_CHANNEL_SECRET', default='')
+LINE_REDIRECT_URI = config('REDIRECT_URI', default='')
+
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": [
@@ -231,3 +236,4 @@ DEFAULT_HTTP_PROTOCOL = 'http'
 
 # DEFAULT_DOMAIN = 'swift-passion.net'
 # DEFAULT_HTTP_PROTOCOL = 'https'
+
